@@ -3,46 +3,54 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PegawaiController extends Controller
 {
-     public function index()
+    public function index()
     {
-       $data ['name']        = 'Roujwa';
-    $data ['my_age']      = $this->calculateAge('2006-05-31');
-    $data ['hobbies'] = ['Menggambar','Nonton Drakor','Berenang', 'Travelling'];
-    $data ['tgl_harus_wisuda'] = ['2028-10-19'];
-    $data ['time_to_study_left'] =  $this->calculateStudyTimeLeft($data['tgl_harus_wisuda']);
-    $data ['current_semester'] = ['4'];
+        // Data pribadi
+        $name = "Roujwa Tifaelfaira"; // ganti sesuai kebutuhan
+        $birthdate = Carbon::create(2003, 5, 12); // contoh tanggal lahir
+        $my_age = $birthdate->age;
 
-    if ($data['current_semester'] < 3) {
-            $data['semester_message'] = 'Masih Awal, Kejar TAK';
-        } else {
-            $data['semester_message'] = 'Jangan main-main, kurang-kurangi main game!';
-        }
+        // Hobi (minimal 5 item)
+        $hobbies = [
+            "Membaca Buku",
+            "Menulis",
+            "Ngoding",
+            "Olahraga",
+            "Traveling"
+        ];
+
+        // Tanggal harus wisuda
+        $tgl_harus_wisuda = Carbon::create(2026, 7, 1);
+
+        // Hitung sisa hari dari sekarang ke tanggal wisuda
+        $today = Carbon::now();
+        $time_to_study_left = $today->diffInDays($tgl_harus_wisuda, false);
+
+        // Semester saat ini
+        $current_semester = 5;
+
+        // Pesan sesuai semester
+        $message = ($current_semester < 3)
+            ? "Masih Awal, Kejar TAK"
+            : "Jangan main-main, kurang-kurangi main game!";
 
         // Cita-cita
-        $data['future_goal'] = 'Desainer';
+        $future_goal = "Menjadi Software Engineer yang bermanfaat";
 
-        // Menampilkan data ke view 'home'
-        return view('home', $data);
-    }
-
-     private function calculateAge($dob)
-    {
-        $dob = new DateTime($dob);
-        $now = new DateTime();
-        $age = $now->diff($dob);
-        return $age->y; // Mengembalikan umur dalam tahun
-    }
-
-    // Fungsi untuk menghitung sisa waktu hingga wisuda
-    private function calculateStudyTimeLeft($graduation_date)
-    {
-        $graduation_date = new DateTime($graduation_date);
-        $now = new DateTime();
-        $interval = $now->diff($graduation_date);
-        return $interval->format('%y tahun, %m bulan, %d hari'); // Format sisa waktu
+        // Kirim data ke view
+        return view('pegawai.index', compact(
+            'name',
+            'my_age',
+            'hobbies',
+            'tgl_harus_wisuda',
+            'time_to_study_left',
+            'current_semester',
+            'message',
+            'future_goal'
+        ));
     }
 }
-
