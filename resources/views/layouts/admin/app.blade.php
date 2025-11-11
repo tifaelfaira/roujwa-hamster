@@ -50,9 +50,7 @@
 
     <main class="content">
 
-        {{-- START HEADER --}}
-        @include('layouts.admin.header')
-        {{-- END HEADER --}}
+   
 
 
         {{-- START MAIN CONTENT --}}
