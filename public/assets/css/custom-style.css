@@ -1,8 +1,9 @@
+/* font  */
 @font-face {
-    font-family: 'OpenSans';
-    src: url('assets/fonts/OpenSans.ttf');
+    font-family: 'LexendDeca';
+    src: url('assets/fonts/LexendDeca.ttf');
 }
 
-.font-custom{
-    font-family: 'OpenSans';
+.font1{
+    font-family: 'MyCustomFont';
 }

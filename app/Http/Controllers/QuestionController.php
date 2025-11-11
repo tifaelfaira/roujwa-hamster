@@ -26,12 +26,11 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
+        //dd($request->all());
         $request->validate([
-            'nama'       => 'required|max:10',
+            'nama'       => 'required|max:20',
             'email'      => ['required', 'email'],
-            'pertanyaan' => 'required|max:300|min:8',
+            'pertanyaan' => 'required|max:300|min:3',
         ]);
 
         $data['nama']       = $request->nama;
@@ -40,12 +39,15 @@ class QuestionController extends Controller
 
         //return view('home-question-respon', $data);
 
+        // Redirect ke route yang memiliki alias 'home'
         return redirect()->route('home')->with('info', 'Terimakasih atas pertanyaannya <b> ' .$data['nama'].'! </b>
         Silahkan cek email anda di <b>' .$data['email'].'</b> untuk respon lebih lanjut');
 
-       // return redirect()->away('https://www.example.com');
+        // //Redirect ke halaman sebelumnya
+        // return redirect()->back();
 
-
+        // // Redirect ke URL eksternal
+        //  return redirect()->away('https://www.tokopedia.com');
 
     }
 
@@ -62,7 +64,7 @@ class QuestionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //tes
     }
 
     /**

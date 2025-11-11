@@ -8,4 +8,3 @@
     <p>Laravel membuat development lebih cepat 🚀</p>
 </body>
 </html>
-

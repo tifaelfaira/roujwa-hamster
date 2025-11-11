@@ -23,7 +23,7 @@
         }
 
         .hero-section {
-            background-color: #3187e9;
+            background-color: #3E97FF;
             color: white;
             padding: 50px 0;
             text-align: center;
@@ -57,7 +57,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <img src="{{ asset('assets/images/nct.png') }}" alt="Logo">
+            <img src="{{ asset('assets/images/Tyler.png') }}" alt="Logo">
             <a class="navbar-brand" href="#">My Laravel App</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,8 +85,8 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="display-6 mb-2 font-custom">HEYYO! Annyeong uri NCT 127 Fangirl!</h1>
-            <p class="lead mb-0">A simple and elegant app using Bootstrap 5 and Laravel Blade.</p>
+            <h1 class="display-6 mb-2 font1">{{ $username }} </h1>
+            <p class="lead mb-0">{{ $last_login }} </p>
         </div>
     </section>
 
@@ -146,9 +146,9 @@
                             <span class="badge text-bg-danger">Bootstrap</span>
                         </div>
                         <ul class="list-group mb-3">
-                            <li class="list-group-item">Item Satu</li>
-                            <li class="list-group-item">Item Dua</li>
-                            <li class="list-group-item">Item Tiga</li>
+                            @foreach ($list_pendidikan as $item)
+                                <li class="list-group-item">{{ $item }}</li>
+                            @endforeach
                         </ul>
                         <div class="p-3 border rounded">
                             <strong>Div umum</strong> — ini hanya <em>container</em> untuk konten bebas.
@@ -165,6 +165,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Form Pertanyaan</h5>
 
+
+                        {{-- notif error --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -175,6 +177,8 @@
                             </div>
                         @endif
 
+
+                        {{-- notif info --}}
                         @if (session('info'))
                             <div class="alert alert-info">
                                 {!! session('info') !!}
@@ -182,9 +186,9 @@
                         @endif
 
 
+                        {{-- notif pertanyaan --}}
                         <form action="{{ route('question.store') }}" method="POST">
                             @csrf
-
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
                                 <input type="text" class="form-control" name="nama">
@@ -243,19 +247,19 @@
                                 <tbody>
                                     <tr>
                                         <td>1</td>
-                                        <td>Ani</td>
+                                        <td>Arin</td>
                                         <td>Admin</td>
                                         <td><span class="badge text-bg-success">Active</span></td>
                                     </tr>
                                     <tr>
                                         <td>2</td>
-                                        <td>Budi</td>
+                                        <td>Awa</td>
                                         <td>User</td>
                                         <td><span class="badge text-bg-secondary">Inactive</span></td>
                                     </tr>
                                     <tr>
                                         <td>3</td>
-                                        <td>Cici</td>
+                                        <td>Tipa</td>
                                         <td>Editor</td>
                                         <td><span class="badge text-bg-warning">Pending</span></td>
                                     </tr>

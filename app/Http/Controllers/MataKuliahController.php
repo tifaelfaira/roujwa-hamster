@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MataKuliahController extends Controller
+class MatakuliahController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $param1=null, $param2=null)
+    public function index()
     {
-        if($param == null){
-            return "Masukkan kode matakuliah";
-        }
-        return "anda mengakses matakuliah".$param2;
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +35,9 @@ class MataKuliahController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if($param1 == 'index') {
+            return view('halaman-index-mahasiswa');
+        } 
     }
 
     /**
