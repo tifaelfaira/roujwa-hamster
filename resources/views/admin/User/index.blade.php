@@ -44,7 +44,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="table-user" class="table table-centered table-nowrap mb-0 rounded">
-                            <thead class="thead-light">
+                            <thead class="thead-light"> 
                                 <tr>
                                     <th class="border-0">Name</th>
                                     <th class="border-0">Email</th>
