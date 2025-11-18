@@ -9,10 +9,15 @@ class PelangganController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['dataPelanggan'] = Pelanggan::paginate(10);
-        return view('admin.pelanggan.index', $data);
+         $filterableColumns =['Gender'];
+        $searchTableColumns = ['first_name'];
+        $pageData['dataPelanggan']= Pelanggan::filter($request, $filterableColumns)
+                    ->search($request, $searchTableColumns)
+                    ->paginate(10)
+                    ->withQueryString();
+        return view('admin.pelanggan.index', $pageData);
     }
 
     /**
@@ -28,7 +33,27 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all())
+        $pesan = [
+            'first_name.required' => 'First name wajib diisi.',
+            'last_name.required'  => 'Last name wajib diisi.',
+            'birthday.required'   => 'Birthday wajib diisi.',
+            'birthday.date'       => 'Birthday harus berupa tanggal yang valid.',
+            'gender.required'     => 'Gender wajib diisi.',
+            'gender.in'           => 'Gender hanya boleh diisi dengan Male atau Female.',
+            'email.required'      => 'Email wajib diisi.',
+            'email.email'         => 'Email harus berupa alamat email yang valid.',
+            'phone.required'      => 'Phone wajib diisi.',
+            'phone.numeric'       => 'Phone harus berupa angka.',
+        ];
+
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name'  => 'required|string',
+            'birthday'   => 'required|date',
+            'gender'     => 'required|in:Male,Female',
+            'email'      => 'required|email',
+            'phone'      => 'required|numeric',
+        ], $pesan);
 
         $data['first_name'] = $request->first_name;
         $data['last_name']  = $request->last_name;
@@ -36,8 +61,6 @@ class PelangganController extends Controller
         $data['gender']     = $request->gender;
         $data['email']      = $request->email;
         $data['phone']      = $request->phone;
-
-        // dd($data);
 
         Pelanggan::create($data);
 
@@ -60,7 +83,6 @@ class PelangganController extends Controller
         $data['dataPelanggan'] = Pelanggan::findOrFail($id);
         return view('admin.pelanggan.edit', $data);
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -77,7 +99,6 @@ class PelangganController extends Controller
         $pelanggan->phone      = $request->phone;
 
         $pelanggan->save();
-
         return redirect()->route('pelanggan.index')->with('success', 'Perubahan Data Berhasil!');
     }
 
@@ -87,8 +108,8 @@ class PelangganController extends Controller
     public function destroy(string $id)
     {
         $pelanggan = Pelanggan::findOrFail($id);
-
         $pelanggan->delete();
+
         return redirect()->route('pelanggan.index')->with('success', 'Data Berhasil Dihapus');
     }
 }
