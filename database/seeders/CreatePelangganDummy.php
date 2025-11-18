@@ -27,4 +27,3 @@ class CreatePelangganDummy extends Seeder
     }
 }
 }
-
