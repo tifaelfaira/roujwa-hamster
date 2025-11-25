@@ -64,4 +64,19 @@ class User extends Authenticatable
         }
         return $query;
     }
+
+    /**
+     * Scope untuk search data
+     */
+    public function scopeSearch(Builder $query, $request, array $searchableColumns): Builder
+    {
+        if ($request->filled('search')) {
+            $query->where(function($q) use ($request, $searchableColumns) {
+                foreach ($searchableColumns as $column) {
+                    $q->orWhere($column, 'LIKE', '%' . $request->search . '%');
+                }
+            });
+        }
+        return $query;
+    }
 }

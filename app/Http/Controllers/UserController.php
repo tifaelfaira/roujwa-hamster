@@ -13,8 +13,10 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $filterableColumns = ['name', 'email'];
+        $searchableColumns = ['name', 'email']; // Kolom yang akan dicari saat search
         
         $data['dataUser'] = User::filter($request, $filterableColumns)
+                                ->search($request, $searchableColumns) // Tambahkan search
                                 ->paginate(10)
                                 ->withQueryString();
 
