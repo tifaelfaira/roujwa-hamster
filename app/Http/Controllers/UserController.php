@@ -12,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['dataUser'] = User::all();
+        // Ubah dari all() menjadi paginate(10)
+        $data['dataUser'] = User::paginate(10);
         return view('admin.user.index', $data);
     }
 
@@ -29,25 +30,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all())
-
         $data['name']     = $request->name;
         $data['email']    = $request->email;
         $data['password'] = Hash::make($request->password);
 
-        // dd($data);
-
         User::create($data);
 
         return redirect()->route('user.index')->with('success', 'Penambahan Data Berhasil!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -69,7 +58,11 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email  = $request->email;
-        $user->password   = $request->password;
+        
+        // Update password hanya jika diisi
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
 
         $user->save();
 
@@ -82,8 +75,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-
         $user->delete();
+        
         return redirect()->route('user.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

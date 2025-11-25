@@ -39,25 +39,23 @@
         @endif
         <div class="col-12 mb-4">
             <div class="card border-0 shadow mb-4">
-
-
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="table-user" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light"> 
                                 <tr>
+                                    <th class="border-0">No</th>
                                     <th class="border-0">Name</th>
                                     <th class="border-0">Email</th>
-                                    <th class="border-0">Password</th>
+                                    <th class="border-0">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($dataUser as $item)
                                     <tr>
+                                        <td>{{ $loop->iteration + ($dataUser->currentPage() - 1) * $dataUser->perPage() }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->password }}</td>
-
                                         <td>
                                             <a href="{{ route('user.edit', $item->id) }}"
                                                 class="btn btn-info btn-sm">
@@ -74,7 +72,7 @@
                                                 method="POST" style="display:inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus user ini?')">
                                                     <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
                                                         stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
                                                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -90,6 +88,11 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    
+                    {{-- PAGINATION --}}
+                    <div class="mt-3">
+                        {{ $dataUser->links('pagination::bootstrap-5') }}
                     </div>
                 </div>
             </div>

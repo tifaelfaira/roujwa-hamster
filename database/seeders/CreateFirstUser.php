@@ -14,10 +14,25 @@ class CreateFirstUser extends Seeder
      */
     public function run(): void
     {
-    User::create([
-        'name' => 'Admin',
-        'email' => 'roujwa@pcr.ac.id',
-        'password' => Hash::make('roujwa123')
-    ]);
+        // Create admin user
+        User::create([
+            'name' => 'Admin Roujwa',
+            'email' => 'roujwa@pcr.ac.id',
+            'password' => Hash::make('roujwa123')
+        ]);
+
+        // Create 100 dummy users menggunakan loop seperti contoh pelanggan
+        $faker = \Faker\Factory::create();
+        
+        foreach (range(1, 100) as $index) {
+            User::create([
+                'name' => $faker->name(),
+                'email' => $faker->unique()->safeEmail(),
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]);
+        }
+
+        $this->command->info('Successfully created 101 users (1 admin + 100 dummy users)!');
     }
 }
