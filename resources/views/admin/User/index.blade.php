@@ -94,6 +94,7 @@
                         <table id="table-user" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light"> 
                                 <tr>
+                                    <th class="border-0">Foto</th>
                                     <th class="border-0">No</th>
                                     <th class="border-0">Name</th>
                                     <th class="border-0">Email</th>
@@ -104,6 +105,20 @@
                                 @if($dataUser->count() > 0)
                                     @foreach ($dataUser as $item)
                                         <tr>
+                                            <td>
+                                                @if($item->profile_picture)
+                                                    <img src="{{ Storage::url($item->profile_picture) }}" 
+                                                         alt="Profile" 
+                                                         width="50" 
+                                                         height="50" 
+                                                         class="rounded-circle object-fit-cover border">
+                                                @else
+                                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" 
+                                                         style="width: 50px; height: 50px;">
+                                                        <span class="text-white fw-bold">{{ substr($item->name, 0, 1) }}</span>
+                                                    </div>
+                                                @endif
+                                            </td>
                                             <td>{{ $loop->iteration + ($dataUser->currentPage() - 1) * $dataUser->perPage() }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
@@ -139,7 +154,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="4" class="text-center py-4">
+                                        <td colspan="5" class="text-center py-4">
                                             @if(request()->has('search') || request()->has('name') || request()->has('email'))
                                                 Tidak ada data yang sesuai dengan pencarian Anda.
                                             @else
@@ -175,4 +190,13 @@
         </div>
     </div>
     {{-- END MAIN CONTENT --}}
+
+    <style>
+        .object-fit-cover {
+            object-fit: cover;
+        }
+        .border {
+            border: 2px solid #dee2e6 !important;
+        }
+    </style>
 @endsection

@@ -39,51 +39,54 @@
         <div class="col-12 mb-4">
             <div class="card border-0 shadow components-section">
                 <div class="card-body">
-                    <form action="{{ route('user.store') }}" method="POST">
+                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-4">
                             <div class="col-lg-4 col-sm-6">
-
                                 <!-- Name -->
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" id="name" class="form-control" required name="name">
+                                    <input type="text" id="name" class="form-control" required name="name" value="{{ old('name') }}">
                                 </div>
 
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="text" id="email" class="form-control" required name="email">
+                                    <input type="email" id="email" class="form-control" required name="email" value="{{ old('email') }}">
                                 </div>
                             </div>
 
                             <div class="col-lg-4 col-sm-6">
+                                <!-- Profile Picture -->
+                                <div class="mb-3">
+                                    <label for="profile_picture" class="form-label">Foto Profil</label>
+                                    <input type="file" id="profile_picture" class="form-control" name="profile_picture">
+                                    <small class="text-muted">Format: JPEG, PNG, JPG, GIF. Maksimal 2MB.</small>
+                                </div>
+
                                 <!-- Password -->
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" id="password" class="form-control" name="password">
-                                </div>
-
-                                <div class="col-lg-4 col-sm-6">
-                                <!-- Password Confirmation -->
-                                <div class="mb-3">
-                                    <label for="password_confirmation" class="form-label">Password Confirmation</label>
-                                    <input type="password" id="password_confirmation" class="form-control" name="password_confirmation">
+                                    <input type="password" id="password" class="form-control" name="password" required>
                                 </div>
                             </div>
 
+                            <div class="col-lg-4 col-sm-6">
+                                <!-- Password Confirmation -->
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                                    <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" required>
+                                </div>
 
                                 <!-- Buttons -->
-                                <div class="">
+                                <div class="mt-4">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <a href="{{ route('user.index') }}"
-                                        class="btn btn-outline-secondary ms-2">Batal</a>
+                                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

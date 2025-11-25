@@ -39,7 +39,7 @@
         <div class="col-12 mb-4">
             <div class="card border-0 shadow components-section">
                 <div class="card-body">
-                    <form action="{{ route('user.update', $dataUser->id) }}" method="POST">
+                    <form action="{{ route('user.update', $dataUser->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row mb-4">
@@ -47,49 +47,79 @@
                                 <!-- Name -->
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" id="name" class="form-control" required name="name" value="{{ $dataUser->name }}" required
-                                            name="name">
+                                    <input type="text" id="name" class="form-control" required name="name" value="{{ $dataUser->name }}">
                                 </div>
 
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="text" id="email" class="form-control" required name="email"  value="{{ $dataUser->email }}" required
-                                            name="email">
+                                    <input type="email" id="email" class="form-control" required name="email" value="{{ $dataUser->email }}">
                                 </div>
                             </div>
 
                             <div class="col-lg-4 col-sm-6">
-                                <!-- Password -->
+                                <!-- Profile Picture -->
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" id="password" class="form-control" name="password"  value="{{ $dataUser->password }}" required
-                                            name="password">
+                                    <label for="profile_picture" class="form-label">Foto Profil</label>
+                                    <input type="file" id="profile_picture" class="form-control" name="profile_picture">
+                                    
+                                    @if($dataUser->profile_picture)
+                                        <div class="mt-3">
+                                            <p class="mb-2">Foto Saat Ini:</p>
+                                            <img src="{{ Storage::url($dataUser->profile_picture) }}" 
+                                                 alt="Profile" 
+                                                 width="100" 
+                                                 height="100" 
+                                                 class="rounded-circle object-fit-cover border">
+                                            <br>
+                                            <small class="text-muted mt-2 d-block">{{ $dataUser->profile_picture }}</small>
+                                        </div>
+                                    @else
+                                        <div class="mt-3">
+                                            <p class="mb-2">Foto Saat Ini:</p>
+                                            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" 
+                                                 style="width: 100px; height: 100px;">
+                                                <span class="text-white fw-bold" style="font-size: 2rem;">{{ substr($dataUser->name, 0, 1) }}</span>
+                                            </div>
+                                            <small class="text-muted mt-2 d-block">Belum ada foto profil</small>
+                                        </div>
+                                    @endif
                                 </div>
 
-                                <div class="col-lg-4 col-sm-6">
-                                    <!-- Password Confirmation -->
-                                    <div class="mb-3">
-                                        <label for="password_confirmation" class="form-label">Password Confirmation</label>
-                                        <input type="password" id="password_confirmation" class="form-control"
-                                            name="password_confirmation"  value="{{ $dataUser->password_confirmation }}" required
-                                            name="password_confirmation">
-                                    </div>
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password (Kosongkan jika tidak ingin mengubah)</label>
+                                    <input type="password" id="password" class="form-control" name="password">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6">
+                                <!-- Password Confirmation -->
+                                <div class="mb-3">
+                                    <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                                    <input type="password" id="password_confirmation" class="form-control" name="password_confirmation">
                                 </div>
 
                                 <!-- Buttons -->
-                                <div class="">
+                                <div class="mt-4">
                                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                    <a href="{{ route('pelanggan.index') }}"
-                                        class="btn btn-outline-secondary ms-2">Batal</a>
+                                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
     {{-- END MAIN CONTENT --}}
+
+    <style>
+        .object-fit-cover {
+            object-fit: cover;
+        }
+        .border {
+            border: 2px solid #dee2e6 !important;
+        }
+    </style>
 @endsection
