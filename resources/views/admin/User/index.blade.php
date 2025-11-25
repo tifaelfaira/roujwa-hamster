@@ -24,9 +24,10 @@
                 <p class="mb-0">List data seluruh user</p>
             </div>
             <div>
-                <a href="{{ route('user.create') }}" class="btn btn-success text-white"><i
-                        class="far fa-question-circle me-1"></i>
-                    Tambah User</a>
+                <a href="{{ route('user.create') }}" class="btn btn-success text-white">
+                    <i class="far fa-question-circle me-1"></i>
+                    Tambah User
+                </a>
             </div>
         </div>
     </div>
@@ -40,6 +41,36 @@
         <div class="col-12 mb-4">
             <div class="card border-0 shadow mb-4">
                 <div class="card-body">
+                    {{-- FORM FILTER --}}
+                    <form method="GET" action="{{ route('user.index') }}" class="mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="name" class="form-label">Filter Nama</label>
+                                <input type="text" 
+                                       name="name" 
+                                       class="form-control" 
+                                       value="{{ request('name') }}" 
+                                       placeholder="Cari nama user...">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="email" class="form-label">Filter Email</label>
+                                <input type="text" 
+                                       name="email" 
+                                       class="form-control" 
+                                       value="{{ request('email') }}" 
+                                       placeholder="Cari email user...">
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary me-2">
+                                    <i class="fas fa-filter me-1"></i> Filter
+                                </button>
+                                <a href="{{ route('user.index') }}" class="btn btn-secondary">
+                                    <i class="fas fa-refresh me-1"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="table-responsive">
                         <table id="table-user" class="table table-centered table-nowrap mb-0 rounded">
                             <thead class="thead-light"> 
@@ -94,6 +125,18 @@
                     <div class="mt-3">
                         {{ $dataUser->links('pagination::bootstrap-5') }}
                     </div>
+
+                    {{-- INFO HASIL FILTER --}}
+                    @if(request()->has('name') || request()->has('email'))
+                        <div class="mt-2 text-muted">
+                            <small>
+                                Menampilkan hasil filter: 
+                                @if(request('name')) Nama: "{{ request('name') }}" @endif
+                                @if(request('name') && request('email')) | @endif
+                                @if(request('email')) Email: "{{ request('email') }}" @endif
+                            </small>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
