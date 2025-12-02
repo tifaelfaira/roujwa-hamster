@@ -14,11 +14,11 @@ class UserController extends Controller
     {
         $filterableColumns = ['name', 'email'];
         $searchableColumns = ['name', 'email'];
-        
+
         $data['dataUser'] = User::filter($request, $filterableColumns)
-                                ->search($request, $searchableColumns)
-                                ->paginate(10)
-                                ->withQueryString();
+            ->search($request, $searchableColumns)
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.user.index', $data);
     }
@@ -31,20 +31,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'name'            => 'required',
+            'email'           => 'required|email|unique:users',
+            'password'        => 'required|confirmed',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->all();
+        $data             = $request->all();
         $data['password'] = Hash::make($request->password);
 
         // Handle profile picture upload
         if ($request->hasFile('profile_picture')) {
-            $image = $request->file('profile_picture');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('profile_pictures', $imageName, 'public');
+            $image                   = $request->file('profile_picture');
+            $imageName               = time() . '.' . $image->getClientOriginalExtension();
+            $path                    = $image->storeAs('profile_pictures', $imageName, 'public');
             $data['profile_picture'] = $path;
         }
 
@@ -64,13 +64,13 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|confirmed',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'name'            => 'required',
+            'email'           => 'required|email|unique:users,email,' . $id,
+            'password'        => 'nullable|confirmed',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user->name = $request->name;
+        $user->name  = $request->name;
         $user->email = $request->email;
 
         if ($request->password) {
@@ -84,9 +84,9 @@ class UserController extends Controller
                 Storage::disk('public')->delete($user->profile_picture);
             }
 
-            $image = $request->file('profile_picture');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('profile_pictures', $imageName, 'public');
+            $image                 = $request->file('profile_picture');
+            $imageName             = time() . '.' . $image->getClientOriginalExtension();
+            $path                  = $image->storeAs('profile_pictures', $imageName, 'public');
             $user->profile_picture = $path;
         }
 
@@ -98,14 +98,14 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
-        
+
         // Delete profile picture if exists
         if ($user->profile_picture && Storage::disk('public')->exists($user->profile_picture)) {
             Storage::disk('public')->delete($user->profile_picture);
         }
-        
+
         $user->delete();
-        
+
         return redirect()->route('user.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

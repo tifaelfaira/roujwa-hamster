@@ -46,28 +46,28 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="name" class="form-label">Filter Nama</label>
-                                <input type="text" 
-                                       name="name" 
-                                       class="form-control" 
-                                       value="{{ request('name') }}" 
+                                <input type="text"
+                                       name="name"
+                                       class="form-control"
+                                       value="{{ request('name') }}"
                                        placeholder="Cari nama user...">
                             </div>
                             <div class="col-md-3">
                                 <label for="email" class="form-label">Filter Email</label>
-                                <input type="text" 
-                                       name="email" 
-                                       class="form-control" 
-                                       value="{{ request('email') }}" 
+                                <input type="text"
+                                       name="email"
+                                       class="form-control"
+                                       value="{{ request('email') }}"
                                        placeholder="Cari email user...">
                             </div>
                             <div class="col-md-3">
                                 <label for="search" class="form-label">Search</label>
                                 <div class="input-group">
-                                    <input type="text" 
-                                           name="search" 
-                                           class="form-control" 
-                                           value="{{ request('search') }}" 
-                                           placeholder="Search..." 
+                                    <input type="text"
+                                           name="search"
+                                           class="form-control"
+                                           value="{{ request('search') }}"
+                                           placeholder="Search..."
                                            aria-label="Search">
                                     <button type="submit" class="input-group-text" id="basic-addon2">
                                         <svg class="icon icon-xxs" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +92,7 @@
 
                     <div class="table-responsive">
                         <table id="table-user" class="table table-centered table-nowrap mb-0 rounded">
-                            <thead class="thead-light"> 
+                            <thead class="thead-light">
                                 <tr>
                                     <th class="border-0">Foto</th>
                                     <th class="border-0">No</th>
@@ -107,13 +107,13 @@
                                         <tr>
                                             <td>
                                                 @if($item->profile_picture)
-                                                    <img src="{{ Storage::url($item->profile_picture) }}" 
-                                                         alt="Profile" 
-                                                         width="50" 
-                                                         height="50" 
+                                                    <img src="{{ Storage::url($item->profile_picture) }}"
+                                                         alt="Profile"
+                                                         width="50"
+                                                         height="50"
                                                          class="rounded-circle object-fit-cover border">
                                                 @else
-                                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" 
+                                                    <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center"
                                                          style="width: 50px; height: 50px;">
                                                         <span class="text-white fw-bold">{{ substr($item->name, 0, 1) }}</span>
                                                     </div>
@@ -166,7 +166,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                     {{-- PAGINATION --}}
                     <div class="mt-3">
                         {{ $dataUser->links('pagination::bootstrap-5') }}
@@ -176,7 +176,7 @@
                     @if(request()->has('name') || request()->has('email') || request()->has('search'))
                         <div class="mt-2 text-muted">
                             <small>
-                                Menampilkan hasil: 
+                                Menampilkan hasil:
                                 @if(request('name')) Filter Nama: "{{ request('name') }}" @endif
                                 @if(request('name') && (request('email') || request('search'))) | @endif
                                 @if(request('email')) Filter Email: "{{ request('email') }}" @endif

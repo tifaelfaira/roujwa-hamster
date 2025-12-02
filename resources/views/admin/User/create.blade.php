@@ -46,13 +46,15 @@
                                 <!-- Name -->
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" id="name" class="form-control" required name="name" value="{{ old('name') }}">
+                                    <input type="text" id="name" class="form-control" required name="name"
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <!-- Email -->
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" id="email" class="form-control" required name="email" value="{{ old('email') }}">
+                                    <input type="email" id="email" class="form-control" required name="email"
+                                        value="{{ old('email') }}">
                                 </div>
                             </div>
 
@@ -75,20 +77,23 @@
                                 <!-- Password Confirmation -->
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                                    <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" required>
+                                    <input type="password" id="password_confirmation" class="form-control"
+                                        name="password_confirmation" required>
                                 </div>
 
-                                <!-- Buttons -->
-                                <div class="mt-4">
-                                    <button type="submit" class="btn btn-primary">Simpan</button>
-                                    <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
-                                </div>
+
+
+                            <!-- Buttons -->
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <a href="{{ route('user.index') }}" class="btn btn-outline-secondary ms-2">Batal</a>
                             </div>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     {{-- END MAIN CONTENT --}}
 @endsection

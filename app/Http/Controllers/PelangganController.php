@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Pelanggan;
 use App\Models\Multipleuploads;
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 
 class PelangganController extends Controller
@@ -12,14 +12,14 @@ class PelangganController extends Controller
      */
     public function index(Request $request)
     {
-        $filterableColumns = ['gender']; // Perbaiki penulisan 'Gender' menjadi 'gender'
+        $filterableColumns  = ['gender'];                           // Perbaiki penulisan 'Gender' menjadi 'gender'
         $searchTableColumns = ['first_name', 'last_name', 'email']; // Tambah kolom search
-        
+
         $pageData['dataPelanggan'] = Pelanggan::filter($request, $filterableColumns)
-                    ->search($request, $searchTableColumns)
-                    ->paginate(10)
-                    ->withQueryString();
-        
+            ->search($request, $searchTableColumns)
+            ->paginate(10)
+            ->withQueryString();
+
         return view('admin.pelanggan.index', $pageData);
     }
 
@@ -70,10 +70,10 @@ class PelangganController extends Controller
     public function show(string $id)
     {
         $pelanggan = Pelanggan::findOrFail($id);
-        $files = Multipleuploads::where('ref_table', 'pelanggan')
-                               ->where('ref_id', $id)
-                               ->get();
-        
+        $files     = Multipleuploads::where('ref_table', 'pelanggan')
+            ->where('ref_id', $id)
+            ->get();
+
         return view('admin.pelanggan.show', compact('pelanggan', 'files'));
     }
 
@@ -126,21 +126,21 @@ class PelangganController extends Controller
     public function destroy(string $id)
     {
         $pelanggan = Pelanggan::findOrFail($id);
-        
+
         // Hapus file-file yang terkait dengan pelanggan
         $files = Multipleuploads::where('ref_table', 'pelanggan')
-                               ->where('ref_id', $id)
-                               ->get();
-        
+            ->where('ref_id', $id)
+            ->get();
+
         foreach ($files as $file) {
             // Delete file from storage
-            $filePath = public_path('storage/multiple_uploads/'.$file->filename);
+            $filePath = public_path('storage/multiple_uploads/' . $file->filename);
             if (file_exists($filePath)) {
                 unlink($filePath);
             }
             $file->delete();
         }
-        
+
         $pelanggan->delete();
 
         return redirect()->route('pelanggan.index')->with('success', 'Data Berhasil Dihapus');
